@@ -1,9 +1,8 @@
 # craftpath configuration -- yours to edit; `craftpath init` never rewrites it.
 
 [git]
-# Work item branches start here. This branch will exist after the repository's
-# first commit is created on it.
-base_branch = "work/0001-prepare-local-application-infrastructure"
+# Work item branches start here.
+base_branch = "main"
 
 # A module is a directory with its own test command. The modules a task touches
 # are the ones whose tests must pass for it to complete; tasks in one wave run
