@@ -1,0 +1,41 @@
+# craftpath configuration -- yours to edit; `craftpath init` never rewrites it.
+
+[git]
+# Work item branches start here. This branch will exist after the repository's
+# first commit is created on it.
+base_branch = "work/0001-prepare-local-application-infrastructure"
+
+# A module is a directory with its own test command. The modules a task touches
+# are the ones whose tests must pass for it to complete; tasks in one wave run
+# in parallel only when they touch different modules.
+[modules.app]
+path = "./"
+test = "for d in quantity ingredients recipes meal_calendar frontend; do (cd $d && gleam format --check && gleam check) || exit $?; done && (cd recipe_finder && go test ./...) && (cd shopping && cargo test)"
+
+[modules.quantity]
+path = "./quantity"
+test = "gleam format --check && gleam check"
+
+[modules.ingredients]
+path = "./ingredients"
+test = "gleam format --check && gleam check"
+
+[modules.recipes]
+path = "./recipes"
+test = "gleam format --check && gleam check"
+
+[modules.meal_calendar]
+path = "./meal_calendar"
+test = "gleam format --check && gleam check"
+
+[modules.frontend]
+path = "./frontend"
+test = "gleam format --check && gleam check"
+
+[modules.recipe_finder]
+path = "./recipe_finder"
+test = "go test ./..."
+
+[modules.shopping]
+path = "./shopping"
+test = "cargo test"

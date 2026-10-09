@@ -1,0 +1,23 @@
+# Build output and dependency caches
+**/build/
+**/target/
+
+# Go build output
+recipe_finder/recipe-finder
+
+# Discovery working evidence is local until it is ready to publish.
+# Keep only discovery/README.md, modules.md, design.md, work-groups.md, and
+# module-work.md under version control.
+discovery/*
+!discovery/README.md
+!discovery/modules.md
+!discovery/design.md
+!discovery/work-groups.md
+!discovery/module-work.md
+
+# Local editor and OS files
+.DS_Store
+*.swp
+*.swo
+.pi/npm/
+.pi/git/
