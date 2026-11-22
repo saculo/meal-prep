@@ -4,5 +4,6 @@ Meal planning for a two-person household: recipes, a meal calendar, "what can I 
 
 - `all-event-storms/` — the discovery so far: problem brief, corpus, questions, contradictions, work candidates.
 - `domain-discovery/` — the discovery toolkit (commands and skills) used to produce it.
+- `cmd/server/` — the Go server; `web/` — the Astro web app. See `CLAUDE.md` to run and check it.
 
 Work is driven by GitHub issues: each open issue becomes an orqestrai task.

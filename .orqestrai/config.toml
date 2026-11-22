@@ -1,0 +1,7 @@
+base_branch = "main"
+
+# The quality gate in verify runs these, in this order (as CI does).
+[commands]
+types = "go vet ./... && (cd web && npm ci && npm run check)"
+lint = "test -z \"$(gofmt -l .)\""
+test = "go test ./... && (cd web && npm run build)"

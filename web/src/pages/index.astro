@@ -1,0 +1,26 @@
+---
+const title = "meal-prep"
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main>
+      <h1>{title}</h1>
+      <p>Plan meals, find dinner for today, and get the shopping list.</p>
+      <p><small>version <span id="version">…</span></small></p>
+    </main>
+    <script>
+      const el = document.getElementById("version")
+      fetch("/version")
+        .then((r) => r.text())
+        .then((v) => {
+          if (el) el.textContent = v
+        })
+    </script>
+  </body>
+</html>
