@@ -32,7 +32,7 @@
 - source: discovery/weekly-meal-planning/event-storm.md
 - loc: Work seeds / R003 evidence U010
 - tags: [rule, term]
-- notes: These fields are needed to place a planned meal.
+- notes: These fields are needed to place a planned meal. Portions "required" superseded by Q068/Q069 (2026-11-23): portions are optional on the planned meal, missing = 1.
 
 ### Q005
 > Meals are placed as planned
@@ -442,7 +442,7 @@
 - source: user-supplied answer, archetype review
 - loc: n/a
 - tags: [rule, term]
-- notes: Recipe has no base yield. Portions belong to the shopping need (planned meal portions), not to the recipe definition. How recipe amounts relate to one portion is still open.
+- notes: Recipe has no base yield. Portions belong to the shopping need (planned meal portions), not to the recipe definition. How recipe amounts relate to one portion is still open. Superseded by Q068 (2026-11-23): portions are optional on the recipe and on the planned meal; the shopping list scales by meal portions ÷ recipe portions.
 
 ### Q055
 > Yes, during making planned meal eaten you can modify values if something has changed
@@ -482,7 +482,7 @@
 - source: user-supplied answer, archetype review
 - loc: n/a
 - tags: [rule, term]
-- notes: Recipe ingredient amounts may be defined either per portion or for a whole batch. Interpreted as: the recipe declares its basis, and a planned meal counts in that basis (portions or batches).
+- notes: Recipe ingredient amounts may be defined either per portion or for a whole batch. Interpreted as: the recipe declares its basis, and a planned meal counts in that basis (portions or batches). Superseded by Q068 (2026-11-23): the per-portion / per-batch basis is gone; recipe amounts are for the recipe portions (missing = 1).
 
 ### Q060
 > Dont care about that, just assume that every ingredient have to have ml/g/kg/l etc. - make it as a requirement
@@ -490,7 +490,7 @@
 - source: user-supplied answer, archetype review
 - loc: n/a
 - tags: [rule, constraint]
-- notes: Every recipe ingredient amount must be in a mass or volume unit (g, kg, ml, l, …). Piece counts are not allowed. Supersedes the "1 tomato" example in Q043.
+- notes: Every recipe ingredient amount must be in a mass or volume unit (g, kg, ml, l, …). Piece counts are not allowed. Supersedes the "1 tomato" example in Q043. Superseded by Q065 (2026-11-23): pieces are a unit again; an amount is in g/kg, ml/l or pieces.
 
 ### Q061
 > yes
@@ -498,7 +498,7 @@
 - source: user-supplied answer, archetype review
 - loc: n/a
 - tags: [rule]
-- notes: Confirms Q059 interpretation: the recipe declares its basis (per portion or per batch); a planned meal counts in that basis; per-batch recipes are planned in whole batches.
+- notes: Confirms Q059 interpretation: the recipe declares its basis (per portion or per batch); a planned meal counts in that basis; per-batch recipes are planned in whole batches. Superseded by Q068 (2026-11-23): no per-batch basis and no whole batches.
 
 ### Q062
 > no you cant, take it as separate things... you cant say 1ml=1g...
@@ -523,3 +523,43 @@
 - loc: n/a
 - tags: [rule]
 - notes: A reusable ingredient may be used by mass in one recipe and by volume in another; it can carry calories per 100 g and/or per 100 ml.
+
+### Q065
+> Amounts can be in g/kg, ml/l or pieces. g and kg convert, ml and l convert. Mass, volume and pieces of one ingredient never combine.
+
+- source: user-supplied answer, units review (2026-11-23)
+- loc: n/a
+- tags: [rule, term, constraint]
+- notes: Supersedes Q060 (no pieces). Pieces never convert to g, even for an ingredient that has both (2 eggs + 100 g egg stays two amounts). Extends Q062 (mass and volume never converted) and restores Q043 ("1 tomato").
+
+### Q066
+> A reusable ingredient has one or more units (an egg in pieces or g); a recipe line picks one.
+
+- source: user-supplied answer, units review (2026-11-23)
+- loc: n/a
+- tags: [rule, term]
+- notes: Generalises Q064 (one ingredient by mass in one recipe, volume in another) to include pieces.
+
+### Q067
+> Calories are optional per 100 g, per 100 ml and per piece.
+
+- source: user-supplied answer, units review (2026-11-23)
+- loc: n/a
+- tags: [rule]
+- notes: Extends Q063 (line calories = amount x calories per 100 g/ml): a line in pieces uses calories per piece. A line whose unit has no calorie value shows nutrition as incomplete (see Q052).
+
+### Q068
+> Portions are optional on the recipe and on the planned meal. The shopping list scales by meal portions / recipe portions.
+
+- source: user-supplied answer, units review (2026-11-23)
+- loc: n/a
+- tags: [rule, term]
+- notes: Supersedes Q054, Q059, Q061 and the "portions required" part of Q004. Examples: Chili, 400 g beans, 4 portions, planned for 2 -> 200 g. Omelette, 3 eggs, no portions, planned for 2 -> 6 eggs. Chili planned without portions -> 100 g.
+
+### Q069
+> Missing portions count as 1.
+
+- source: user-supplied answer, units review (2026-11-23)
+- loc: n/a
+- tags: [rule]
+- notes: Applies to the recipe and to the planned meal. Chili (4 portions) planned without portions = 1 portion -> 400 g x 1 / 4 = 100 g.

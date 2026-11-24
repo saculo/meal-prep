@@ -98,14 +98,20 @@ Scenario: Order planning suggestions by recency
 
 ### Problem
 
-A selected recipe must be placed on the calendar as a planned meal with date, meal type, portions, and recipe. Users should be able to place multiple meals on one day and move/reschedule planned meals later.
+A selected recipe must be placed on the calendar as a planned meal with date, meal type, and recipe. Portions are optional on the planned meal (missing counts as 1). Users should be able to place multiple meals on one day and move/reschedule planned meals later.
 
 ### Scenarios
 
 Scenario: Place a planned meal
   Given a household user selected a recipe for planning
-  When they place it on the calendar with date, meal type, portions, and recipe
+  When they place it on the calendar with date, meal type, and recipe
   Then the meal is recorded as planned
+
+Scenario: Place a planned meal without portions
+  Given a household user selected a recipe for planning
+  When they place it without portions
+  Then the meal is recorded as planned
+  And its portions count as 1
 
 Scenario: Reschedule a planned meal
   Given a meal is recorded as planned
@@ -121,6 +127,7 @@ Scenario: Reschedule a planned meal
 ### Assumptions
 
 - Calendar entries can represent planned meals.
+- Portions are optional; the shopping list uses them to scale (see R010).
 
 ### Open questions
 
@@ -128,7 +135,9 @@ Scenario: Reschedule a planned meal
 
 ### Evidence
 
-- Q004 — Planned meal data fields
+- Q004 — Planned meal data fields (portions-required part superseded by Q068)
+- Q068 — Portions optional on recipe and planned meal
+- Q069 — Missing portions = 1
 - Q005 — Meals are placed as planned
 - Q006 — Multiple planned meals per day allowed
 - Q007 — Moving/rescheduling allowed
@@ -244,7 +253,7 @@ Scenario: Keep calendar addition optional
 
 ### Problem
 
-Recipe capture should not stop when an ingredient is not yet in the reusable ingredient database. Users need to add temporary/free-text ingredients and optionally convert them later. Ingredients can be saved without calories, so incomplete nutrition must remain visible rather than blocking recipe capture.
+Recipe capture should not stop when an ingredient is not yet in the reusable ingredient database. Users need to add temporary/free-text ingredients and optionally convert them later. Ingredients can be saved without calories, so incomplete nutrition must remain visible rather than blocking recipe capture. Temporary/free-text lines are listed as written, not scaled or combined. For reusable ingredients, calories are optional per 100 g, per 100 ml and per piece; a line whose unit has no calorie value shows nutrition as incomplete.
 
 ### Scenarios
 
@@ -280,6 +289,7 @@ Scenario: Flag incomplete nutrition
 - Q034 — Temporary for given recipe usage
 - Q038 — Earlier calories-required contradiction recorded
 - Q052 — Ingredients can be saved without calories
+- Q067 — Piece calories optional; missing value makes nutrition incomplete
 
 ### Classification notes
 
@@ -444,7 +454,7 @@ Scenario: Offer random fallback for dinner
 
 ### Problem
 
-Before shopping, a household user needs an ingredient list based on planned meals in a selected date range. The list should scale quantities by planned portions, combine same ingredients when possible, convert compatible units, keep incompatible amounts visible, and include temporary/incomplete ingredients.
+Before shopping, a household user needs an ingredient list based on planned meals in a selected date range. Each amount is in g/kg, ml/l or pieces. The list scales quantities by meal portions ÷ recipe portions (portions optional on both, missing = 1), combines same ingredients within one measure (g with kg, ml with l), keeps mass, volume and pieces of one ingredient as separate amounts, and includes temporary/incomplete ingredients (listed as written, not scaled or combined).
 
 ### Scenarios
 
@@ -452,15 +462,37 @@ Scenario: Generate shopping list for selected range
   Given a household user has planned meals in a selected range
   When they generate a shopping list
   Then the list includes ingredients from planned meals only
-  And ingredient quantities are scaled by planned meal portions
+  And ingredient quantities are scaled by meal portions ÷ recipe portions
   And same ingredients are combined by amount where possible
   And temporary or incomplete ingredients are still shown
 
 Scenario: Represent compatible and incompatible units
-  Given planned recipes include 100ml and 0.5l of the same ingredient
+  Given planned recipes include 100 ml and 0.5 l of the same ingredient
   When the shopping list is generated
-  Then those compatible amounts are calculated together
-  And incompatible amounts such as grams plus pieces remain visible together
+  Then those amounts are combined as 600 ml
+
+Scenario: Mass, volume and pieces never combine
+  Given planned recipes include 200 g tomato and 1 tomato
+  When the shopping list is generated
+  Then the list shows 200 g and 1 piece as two amounts of tomato
+
+Scenario: Scale by meal portions over recipe portions
+  Given the Chili recipe has 400 g beans and 4 portions
+  And it is planned for 2 portions
+  When the shopping list is generated
+  Then the list shows 200 g beans
+
+Scenario: Recipe without portions
+  Given the Omelette recipe has 3 eggs and no portions
+  And it is planned for 2 portions
+  When the shopping list is generated
+  Then the list shows 6 eggs
+
+Scenario: Planned meal without portions
+  Given the Chili recipe has 400 g beans and 4 portions
+  And it is planned without portions
+  When the shopping list is generated
+  Then the list shows 100 g beans
 
 ### Out of scope
 
@@ -470,7 +502,8 @@ Scenario: Represent compatible and incompatible units
 
 ### Assumptions
 
-- Planned meals have portion counts and recipe ingredient quantities.
+- Portions are optional on recipes and planned meals; missing counts as 1.
+- Recipe lines have an amount in one unit; pieces never convert to g or ml, even for an ingredient that has both.
 
 ### Open questions
 
@@ -481,9 +514,13 @@ Scenario: Represent compatible and incompatible units
 - Q039 — Shopping list from planned meals
 - Q040 — User-selected range
 - Q041 — Planned meals only
-- Q043 — Unit conversion and mixed amounts
+- Q043 — Unit conversion and mixed amounts (clarified by Q065)
 - Q044 — Include incomplete ingredients
-- Q045 — Scale by portions
+- Q045 — Scale by portions (clarified by Q068, Q069)
+- Q065 — Units: g/kg, ml/l, pieces; mass, volume, pieces never combine
+- Q066 — An ingredient has one or more units; a recipe line picks one
+- Q068 — Scale by meal portions ÷ recipe portions
+- Q069 — Missing portions = 1
 - Q051 — Calendar meals should be planned or eaten
 
 ### Classification notes

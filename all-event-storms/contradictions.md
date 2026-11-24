@@ -92,12 +92,52 @@ Resolved for now in favour of Q057: no recalculation. Q036's rule that eaten his
 
 > just assume that every ingredient have to have ml/g/kg/l etc. - make it as a requirement
 
-- source: Q060 — user-supplied answer
+- source: Q060 — user-supplied answer (superseded by Q065, 2026-11-23)
 
 ### Why this conflicted
 
-Q043 assumed piece amounts ("1 tomato") exist; Q060 requires every amount to be mass or volume.
+Q043 assumed piece amounts ("1 tomato") exist; Q060 required every amount to be mass or volume.
+
+### Clarification answer
+
+> Amounts can be in g/kg, ml/l or pieces. g and kg convert, ml and l convert. Mass, volume and pieces of one ingredient never combine.
+
+- source: Q065 — user-supplied answer (2026-11-23)
 
 ### Status
 
-Resolved in favour of Q060: no piece amounts. Q043's conversion rule (100 ml + 0.5 l) still holds; mass and volume of the same ingredient remain the only incompatible pair.
+Reopened 2026-11-23 and resolved for Q043 + Q065: pieces are a unit again. g with kg and ml with l combine; mass, volume and pieces of one ingredient never combine. Q060 is superseded. (Earlier resolution, now void: Q060, no piece amounts.)
+
+## C005 — Portions: required, per portion or batch, or optional
+
+### Clashing evidence
+
+> But recipe doesn't need portions, rather list needs how many "portions" are needed rn to be bought
+
+- source: Q054 — user-supplied answer (superseded by Q068)
+
+> Can be per portion and whole batch
+
+- source: Q059 — user-supplied answer (superseded by Q068); confirmed by Q061
+
+> Date, meal type, portions, recipe
+
+- source: Q004 — discovery/weekly-meal-planning/event-storm.md (portions required, superseded by Q068/Q069)
+
+### Why this conflicted
+
+Q054 put portions only on the shopping need, Q059/Q061 gave the recipe a per-portion or per-batch basis planned in whole batches, and Q004 required portions on the planned meal.
+
+### Clarification answer
+
+> Portions are optional on the recipe and on the planned meal. The shopping list scales by meal portions / recipe portions.
+
+- source: Q068 — user-supplied answer (2026-11-23)
+
+> Missing portions count as 1.
+
+- source: Q069 — user-supplied answer (2026-11-23)
+
+### Status
+
+Resolved for Q068/Q069: portions are optional on both, missing = 1; scale = meal portions ÷ recipe portions. The per-portion/per-batch basis and whole batches are gone.
