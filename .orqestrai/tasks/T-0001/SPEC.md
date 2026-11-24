@@ -60,3 +60,5 @@ low: documents only, no code or infra. Blast radius: later tasks building from a
 - Temporary free-text ingredient lines stay as today: listed as written, not scaled or combined.
 
 ## Impl notes
+- All: AC3's "brief's three examples" are copied into each task prompt (Chili, 400 g beans, 4 portions, planned for 2 -> 200 g; Omelette, 3 eggs, no portions, planned for 2 -> 6 eggs; Chili planned without portions -> 100 g), because the spec names them but does not state them.
+- All: the Q065-Q069 topics are given to every task so W1.2 and W1.3 can cite them while W1.1 writes them, because the three run in parallel.
